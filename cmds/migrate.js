@@ -17,7 +17,7 @@ module.exports = function() {
             });
         } else {
             console.log('No pending migrations');
-            process.exit();
+            return;
         }
 
         function apply() {

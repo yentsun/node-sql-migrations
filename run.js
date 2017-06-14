@@ -8,8 +8,9 @@ module.exports = function(cfg) {
         config[k] = cfg[k];
     }
     config.conn = utils.makeConnString();
-
-    switch (args[0] || config.cmd) {
+    var cmd = args[0] || config.cmd;
+    console.log('executing', cmd);
+    switch (cmd) {
         case 'create':
             require('./cmds/create_migration.js')(args[1]);
             break;
@@ -20,6 +21,6 @@ module.exports = function(cfg) {
             require('./cmds/rollback.js')();
             break;
         default:
-            console.log('exit');
+            console.log('unknown command');
     }
 };
