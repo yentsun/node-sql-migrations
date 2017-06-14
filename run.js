@@ -9,7 +9,7 @@ module.exports = function(cfg) {
     }
     config.conn = utils.makeConnString();
 
-    switch (args[0]) {
+    switch (args[0] || config.cmd) {
         case 'create':
             require('./cmds/create_migration.js')(args[1]);
             break;
