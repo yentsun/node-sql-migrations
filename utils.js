@@ -12,20 +12,23 @@ module.exports = {
 
         if (pg) return pg; // if we have a native pg connection object - return it at once
 
-        // TODO: database dependent
-        var result = 'postgress://';
+        else {
+            // TODO: database dependent
+            var result = 'postgress://';
 
-        if (user) {
-          result += user;
+            if (user) {
+                result += user;
+            }
+
+            if (password) {
+                result += ':' + password;
+            }
+
+            result += '@' + host + '/' + db;
+
+            return result;
         }
 
-        if (password) {
-            result += ':' + password;
-        }
-
-        result += '@' + host + '/' + db;
-        
-        return result;
     },
     panic: function(err) {
         console.error('ERROR:', err);
