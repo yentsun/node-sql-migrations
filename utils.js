@@ -7,8 +7,11 @@ module.exports = {
         var user = cfg.user,
             password = cfg.password,
             host = cfg.host,
-            ssl = cfg.ssl,
-            db = cfg.db;
+            db = cfg.db,
+            pg = cfg.pg;
+
+        if (pg) return pg; // if we have a native pg connection object - return it at once
+
         // TODO: database dependent
         var result = 'postgress://';
 
@@ -21,10 +24,6 @@ module.exports = {
         }
 
         result += '@' + host + '/' + db;
-
-        if (ssl) {
-            result += '?ssl=true';
-        }
         
         return result;
     },
