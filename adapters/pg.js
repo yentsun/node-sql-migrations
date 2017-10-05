@@ -1,22 +1,14 @@
-var pg = require('pg'),
-    cfg = require('../config.js'),
+var cfg = require('../config.js'),
     utils = require('../utils.js'),
     ENSURE_SQL = 'create table if not exists "__migrations__" (id bigint NOT NULL)';
 
 
-
 module.exports = {
-    exec: function(query, values, cb) {
-        cb || (cb = values);
-        pg.connect(cfg.conn, function(err, client, done) {
-            err && utils.panic(err);
-            client.query(query, values, function(err, result) {
-                //call `done()` to release the client back to the pool
-                done();
-                err && utils.panic(err);
-                cb(result);
-            });
-        });
+    exec: function(query, cb) {
+        cfg.pool.query(query, function(error, result) {
+            error && utils.panic(error);
+            cb(result);
+        })
     },
     appliedMigrations: function(cb) {
         this.ensureMigrationTableExists(function() {

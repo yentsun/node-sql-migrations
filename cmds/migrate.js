@@ -5,7 +5,7 @@ var chalk = require('chalk');
 
 module.exports = function() {
 
-    cfg.conn = utils.makeConnString();
+    cfg.pool = utils.getPool();
 
     adapter.appliedMigrations(function(ids) {
         var migrationsList = utils.getMigrationsList(),
@@ -17,13 +17,13 @@ module.exports = function() {
             });
         } else {
             console.log('No pending migrations');
-            return;
+            return process.exit();
         }
 
         function apply() {
             // base case
             if (!pending.length) {
-                console.log('done');
+                console.log('Done');
                 return process.exit();
             }
             adapter.applyMigration(pending.shift(), function() {

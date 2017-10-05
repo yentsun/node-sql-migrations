@@ -1,34 +1,11 @@
 var fs = require('fs');
+const pg = require('pg');
 var path = require('path');
 var cfg = require('./config.js');
 
 module.exports = {
-    makeConnString: function() {
-        var user = cfg.user,
-            password = cfg.password,
-            host = cfg.host,
-            db = cfg.db,
-            pg = cfg.pg;
-
-        if (pg) return pg; // if we have a native pg connection object - return it at once
-
-        else {
-            // TODO: database dependent
-            var result = 'postgress://';
-
-            if (user) {
-                result += user;
-            }
-
-            if (password) {
-                result += ':' + password;
-            }
-
-            result += '@' + host + '/' + db;
-
-            return result;
-        }
-
+    getPool: function() {
+        return new pg.Pool(cfg.pg);
     },
     panic: function(err) {
         console.error('ERROR:', err);

@@ -7,8 +7,7 @@ module.exports = function(cfg) {
     for (var k in cfg) {
         config[k] = cfg[k];
     }
-    config.conn = utils.makeConnString();
-
+    config.pool = utils.getPool();
     switch (args[0]) {
         case 'create':
             require('./cmds/create_migration.js')(args[1]);

@@ -3,7 +3,9 @@ var path = require('path');
 require('./').run({
     basedir: __dirname,
     migrationsDir: path.resolve(__dirname, 'migrations'),
-    user: 'dabramov',
-    host: 'localhost',
-    db: 'sql_migrations'
+    pg: {
+        user: 'postgres',
+        host: 'localhost',
+        database: 'sql_migrations'
+    }
 });
